@@ -1,4 +1,5 @@
 ﻿using JobTracker.API.Data;
+using JobTracker.API.DTOs;
 using JobTracker.API.Models;
 using JobTracker.API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -25,13 +26,18 @@ public class NoteService : INoteService
             .ToListAsync();
     }
 
-    public async Task<Note?> CreateAsync(int applicationId, Note note)
+    public async Task<Note?> CreateAsync(int applicationId, CreateNoteDto dto)
     {
         var exists = await _context.Applications.AnyAsync(a => a.Id == applicationId);
         if (!exists) return null;
 
-        note.ApplicationId = applicationId;
-        note.CreatedAt = DateTime.UtcNow;
+        var note = new Note
+        {
+            ApplicationId = applicationId,
+            Content = dto.Content,
+            CreatedAt = DateTime.UtcNow
+        };
+
         _context.Notes.Add(note);
         await _context.SaveChangesAsync();
         return note;

@@ -1,4 +1,5 @@
 ﻿using JobTracker.API.Data;
+using JobTracker.API.DTOs;
 using JobTracker.API.Models;
 using JobTracker.API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -33,27 +34,27 @@ public class ApplicationService : IApplicationService
         return application;
     }
 
-    public async Task<bool> UpdateAsync(int id, Application updated)
+    public async Task<bool> UpdateAsync(int id, UpdateApplicationDto dto)
     {
         var application = await _context.Applications.FindAsync(id);
         if (application == null) return false;
 
-        if (application.Status != updated.Status)
+        if (application.Status != dto.Status)
         {
             _context.StatusHistories.Add(new StatusHistory
             {
                 ApplicationId = id,
                 OldStatus = application.Status,
-                NewStatus = updated.Status,
+                NewStatus = dto.Status,
                 ChangedAt = DateTime.UtcNow
             });
         }
 
-        application.Company = updated.Company;
-        application.Role = updated.Role;
-        application.Status = updated.Status;
-        application.JobUrl = updated.JobUrl;
-        application.AppliedDate = updated.AppliedDate;
+        application.Company = dto.Company;
+        application.Role = dto.Role;
+        application.Status = dto.Status;
+        application.JobUrl = dto.JobUrl;
+        application.AppliedDate = dto.AppliedDate;
 
         await _context.SaveChangesAsync();
         return true;

@@ -1,4 +1,5 @@
-﻿using JobTracker.API.Models;
+﻿using JobTracker.API.DTOs;
+using JobTracker.API.Models;
 using JobTracker.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,9 +33,9 @@ public class ApplicationsController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, Application updated)
+    public async Task<IActionResult> Update(int id, UpdateApplicationDto dto)
     {
-        return await _service.UpdateAsync(id, updated) ? NoContent() : NotFound();
+        return await _service.UpdateAsync(id, dto) ? NoContent() : NotFound();
     }
 
     [HttpDelete("{id}")]

@@ -1,4 +1,5 @@
-﻿using JobTracker.API.Models;
+﻿using JobTracker.API.DTOs;
+using JobTracker.API.Models;
 
 namespace JobTracker.API.Services.Interfaces
 {
@@ -7,7 +8,7 @@ namespace JobTracker.API.Services.Interfaces
         Task<IEnumerable<Application>> GetAllAsync();
         Task<Application?> GetByIdAsync(int id);
         Task<Application> CreateAsync(Application application);
-        Task<bool> UpdateAsync(int id, Application updated);
+        Task<bool> UpdateAsync(int id, UpdateApplicationDto dto);
         Task<bool> DeleteAsync(int id);
         Task<object> GetStatsAsync();
     }

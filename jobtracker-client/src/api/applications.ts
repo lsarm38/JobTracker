@@ -22,7 +22,13 @@ export const updateApplication = async (
   id: number,
   application: Omit<Application, 'id' | 'createdAt' | 'notes' | 'statusHistories'>
 ): Promise<void> => {
-  await client.put(`/applications/${id}`, application);
+  await client.put(`/applications/${id}`, {
+    company: application.company,
+    role: application.role,
+    status: application.status,
+    jobUrl: application.jobUrl,
+    appliedDate: application.appliedDate,
+  });
 };
 
 export const deleteApplication = async (id: number): Promise<void> => {

@@ -1,4 +1,5 @@
-﻿using JobTracker.API.Models;
+﻿using JobTracker.API.DTOs;
+using JobTracker.API.Models;
 using JobTracker.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +24,9 @@ public class NotesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Note>> Create(int applicationId, Note note)
+    public async Task<ActionResult<Note>> Create(int applicationId, CreateNoteDto dto)
     {
-        var created = await _service.CreateAsync(applicationId, note);
+        var created = await _service.CreateAsync(applicationId, dto);
         if (created == null) return NotFound();
         return CreatedAtAction(nameof(GetAll), new { applicationId }, created);
     }
