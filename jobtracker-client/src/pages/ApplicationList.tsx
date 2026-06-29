@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getApplications, createApplication, deleteApplication } from '../api/applications';
-import type { Application } from '../types';
-import StatusBadge from '../components/StatusBadge';
-import ApplicationForm from '../components/ApplicationForm';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  getApplications,
+  createApplication,
+  deleteApplication,
+} from "../api/applications";
+import type { Application } from "../types";
+import StatusBadge from "../components/StatusBadge";
+import ApplicationForm from "../components/ApplicationForm";
 
 export default function ApplicationList() {
   const [applications, setApplications] = useState<Application[]>([]);
@@ -16,7 +20,7 @@ export default function ApplicationList() {
       const data = await getApplications();
       setApplications(data);
     } catch (err) {
-      console.error('Failed to fetch applications', err);
+      console.error("Failed to fetch applications", err);
     } finally {
       setLoading(false);
     }
@@ -26,24 +30,29 @@ export default function ApplicationList() {
     fetchApplications();
   }, []);
 
-  const handleCreate = async (formData: Omit<Application, 'id' | 'createdAt' | 'notes' | 'statusHistories'>) => {
+  const handleCreate = async (
+    formData: Omit<
+      Application,
+      "id" | "createdAt" | "notes" | "statusHistories"
+    >,
+  ) => {
     try {
       await createApplication(formData);
       setShowForm(false);
       fetchApplications();
     } catch (err) {
-      console.error('Failed to create application', err);
+      console.error("Failed to create application", err);
     }
   };
 
   const handleDelete = async (e: React.MouseEvent, id: number) => {
     e.stopPropagation();
-    if (!confirm('Delete this application?')) return;
+    if (!confirm("Delete this application?")) return;
     try {
       await deleteApplication(id);
-      setApplications(prev => prev.filter(a => a.id !== id));
+      setApplications((prev) => prev.filter((a) => a.id !== id));
     } catch (err) {
-      console.error('Failed to delete application', err);
+      console.error("Failed to delete application", err);
     }
   };
 
@@ -74,21 +83,31 @@ export default function ApplicationList() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 border-b border-gray-200">
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Company</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Role</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Date Applied</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600">
+                  Company
+                </th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600">
+                  Role
+                </th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600">
+                  Status
+                </th>
+                <th className="text-left px-4 py-3 font-medium text-gray-600">
+                  Date Applied
+                </th>
                 <th className="px-4 py-3"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {applications.map(app => (
+              {applications.map((app) => (
                 <tr
                   key={app.id}
                   onClick={() => navigate(`/applications/${app.id}`)}
                   className="hover:bg-gray-50 cursor-pointer transition-colors"
                 >
-                  <td className="px-4 py-3 font-medium text-gray-800">{app.company}</td>
+                  <td className="px-4 py-3 font-medium text-gray-800">
+                    {app.company}
+                  </td>
                   <td className="px-4 py-3 text-gray-600">{app.role}</td>
                   <td className="px-4 py-3">
                     <StatusBadge status={app.status} />
@@ -98,7 +117,7 @@ export default function ApplicationList() {
                   </td>
                   <td className="px-4 py-3 text-right">
                     <button
-                      onClick={e => handleDelete(e, app.id)}
+                      onClick={(e) => handleDelete(e, app.id)}
                       className="text-gray-400 hover:text-red-500 transition-colors text-xs"
                     >
                       Delete

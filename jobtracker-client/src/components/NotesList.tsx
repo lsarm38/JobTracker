@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import type { Note } from '../types/index';
+import { useState } from "react";
+import type { Note } from "../types/index";
 
 interface Props {
   notes: Note[];
@@ -8,12 +8,12 @@ interface Props {
 }
 
 export default function NotesList({ notes, onAdd, onDelete }: Props) {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
 
   const handleAdd = () => {
     if (!content.trim()) return;
     onAdd(content.trim());
-    setContent('');
+    setContent("");
   };
 
   return (
@@ -24,8 +24,8 @@ export default function NotesList({ notes, onAdd, onDelete }: Props) {
       <div className="flex gap-2 mb-4">
         <input
           value={content}
-          onChange={e => setContent(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && handleAdd()}
+          onChange={(e) => setContent(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleAdd()}
           placeholder="Add a note..."
           className="flex-1 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -42,7 +42,7 @@ export default function NotesList({ notes, onAdd, onDelete }: Props) {
         <p className="text-sm text-gray-400">No notes yet — add one above.</p>
       ) : (
         <ul className="space-y-2">
-          {notes.map(note => (
+          {notes.map((note) => (
             <li
               key={note.id}
               className="flex items-start justify-between bg-gray-50 border border-gray-200 rounded-lg px-4 py-3"
