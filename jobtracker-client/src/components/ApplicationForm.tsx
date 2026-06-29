@@ -1,27 +1,38 @@
-import { useState } from 'react';
-import type { Application } from '../types';
+import { useState } from "react";
+import type { Application } from "../types";
 
-type FormData = Omit<Application, 'id' | 'createdAt' | 'notes' | 'statusHistories'>;
+type FormData = Omit<
+  Application,
+  "id" | "createdAt" | "notes" | "statusHistories"
+>;
 
 interface Props {
   initial?: FormData;
   onSubmit: (data: FormData) => void;
   onCancel: () => void;
+  mode?: "add" | "edit";
 }
 
 const empty: FormData = {
-  company: '',
-  role: '',
-  status: 'Applied',
-  jobUrl: '',
-  appliedDate: new Date().toISOString().split('T')[0],
+  company: "",
+  role: "",
+  status: "Applied",
+  jobUrl: "",
+  appliedDate: new Date().toISOString().split("T")[0],
 };
 
-export default function ApplicationForm({ initial = empty, onSubmit, onCancel }: Props) {
+export default function ApplicationForm({
+  initial = empty,
+  onSubmit,
+  onCancel,
+  mode = "add",
+}: Props) {
   const [form, setForm] = useState<FormData>(initial);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -29,15 +40,20 @@ export default function ApplicationForm({ initial = empty, onSubmit, onCancel }:
     onSubmit(form);
   };
 
-  const inputClass = "w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
+  const inputClass =
+    "w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500";
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white rounded-xl shadow-xl w-full max-w-md p-6">
-        <h2 className="text-lg font-semibold mb-4">Add Application</h2>
+        <h2 className="text-lg font-semibold mb-4">
+          {mode === "edit" ? "Edit Application" : "Add Application"}
+        </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Company
+            </label>
             <input
               name="company"
               value={form.company}
@@ -48,7 +64,9 @@ export default function ApplicationForm({ initial = empty, onSubmit, onCancel }:
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Role
+            </label>
             <input
               name="role"
               value={form.role}
@@ -59,8 +77,15 @@ export default function ApplicationForm({ initial = empty, onSubmit, onCancel }:
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-            <select name="status" value={form.status} onChange={handleChange} className={inputClass}>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Status
+            </label>
+            <select
+              name="status"
+              value={form.status}
+              onChange={handleChange}
+              className={inputClass}
+            >
               <option>Applied</option>
               <option>Interview</option>
               <option>Offer</option>
@@ -68,7 +93,9 @@ export default function ApplicationForm({ initial = empty, onSubmit, onCancel }:
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Job URL</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Job URL
+            </label>
             <input
               name="jobUrl"
               value={form.jobUrl}
@@ -78,7 +105,9 @@ export default function ApplicationForm({ initial = empty, onSubmit, onCancel }:
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Date Applied</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Date Applied
+            </label>
             <input
               type="date"
               name="appliedDate"
@@ -100,7 +129,7 @@ export default function ApplicationForm({ initial = empty, onSubmit, onCancel }:
               type="submit"
               className="px-4 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700"
             >
-              Save
+              {mode === "edit" ? "Update" : "Save"}
             </button>
           </div>
         </form>
