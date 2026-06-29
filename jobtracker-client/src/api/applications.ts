@@ -1,5 +1,5 @@
 import client from './client';
-import { Application, Stats } from '../types';
+import type { Application, Stats } from '../types/index';
 
 export const getApplications = async (): Promise<Application[]> => {
   const { data } = await client.get('/applications');
