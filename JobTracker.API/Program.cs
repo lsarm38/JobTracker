@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", policy =>
         policy.WithOrigins(
             "http://localhost:5173",
-            "https://my-app.vercel.app"  // updating this after frontend Vercel deploy
+            "https://job-tracker-rose-psi.vercel.app"
         )
         .AllowAnyMethod()
         .AllowAnyHeader());
