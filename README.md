@@ -113,8 +113,8 @@ The app will start at `http://localhost:5173`.
 
 ## Roadmap
 
-- [ ] PostgreSQL for production
-- [ ] Deploy API to Azure / Railway
+- [x] PostgreSQL for production
+- [x] Deploy API to Render
 - [ ] Deploy frontend to Vercel
 - [ ] Authentication for multi-user support
 - [ ] Export applications to CSV
