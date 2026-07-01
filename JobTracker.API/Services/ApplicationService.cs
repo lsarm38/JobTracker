@@ -29,6 +29,7 @@ public class ApplicationService : IApplicationService
     public async Task<Application> CreateAsync(Application application)
     {
         application.CreatedAt = DateTime.UtcNow;
+        application.AppliedDate = DateTime.SpecifyKind(application.AppliedDate, DateTimeKind.Utc);
         _context.Applications.Add(application);
         await _context.SaveChangesAsync();
         return application;
@@ -54,7 +55,7 @@ public class ApplicationService : IApplicationService
         application.Role = dto.Role;
         application.Status = dto.Status;
         application.JobUrl = dto.JobUrl;
-        application.AppliedDate = dto.AppliedDate;
+        application.AppliedDate = DateTime.SpecifyKind(dto.AppliedDate, DateTimeKind.Utc);
 
         await _context.SaveChangesAsync();
         return true;
